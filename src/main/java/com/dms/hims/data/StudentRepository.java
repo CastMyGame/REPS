@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface StudentRepository extends MongoRepository<Student, Integer> {
 
     @Override
-    Optional<Student> findById(Integer integer);
+    Optional<Student> findById(Integer studentId);
 
     Optional<Student> findByLastName(String lastName);
 

@@ -1,10 +1,12 @@
 package com.dms.hims.controller;
 
+import com.dms.hims.model.Student;
 import com.dms.hims.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -14,4 +16,12 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @GetMapping("/studentid")
+    public ResponseEntity<Optional<Student>> index(@RequestBody Integer studentId) {
+       var message = studentService.requestStudentId(studentId);
+
+       return ResponseEntity
+               .accepted()
+               .body(message);
+    }
 }
