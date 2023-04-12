@@ -14,6 +14,4 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    private String firstName;
-
 }
