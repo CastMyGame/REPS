@@ -15,9 +15,16 @@ public class Student {
     private Integer studentIdNumber;
     private String firstName;
     private String lastName;
-    private String email;
+    private String parentEmail;
+    private String studentEmail;
+    private String guidanceEmail;
+    private String adminEmail;
     private String address;
     private String grade;
-    private Integer phoneNumber;
+    private Integer parentPhoneNumber;
+    private Integer studentPhoneNumber;
     private String level;
+
+    // if multiple levels are open, automatically email guidance/admin
+    // Track how many times they have had this opened,
 }

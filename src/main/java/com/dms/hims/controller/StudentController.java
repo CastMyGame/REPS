@@ -12,7 +12,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/student/v1")
 public class StudentController {
-
     @Autowired
     private StudentService studentService;
 
