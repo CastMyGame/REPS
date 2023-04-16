@@ -1,7 +1,9 @@
 package com.dms.hims.event;
 
 
-public class InfractionReportCommand {
+import com.dms.hims.model.Infraction;
+
+public class InfractionReportCommand extends Infraction {
     private String infractionLevel;
     private String infractionType;
     private String studentId;

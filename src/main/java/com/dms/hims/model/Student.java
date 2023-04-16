@@ -25,6 +25,6 @@ public class Student {
     private Integer studentPhoneNumber;
     private String level;
 
-    // if multiple levels are open, automatically email guidance/admin
+    // if multiple levels are open, automatically email guidance/admin (2 in a day or > 3)
     // Track how many times they have had this opened,
 }

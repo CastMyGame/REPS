@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -27,7 +26,7 @@ public class StudentService {
        if (findMe.isEmpty()) {
            throw new ResourceNotFoundException("No student with that Id exists");
        }
-    logger.debug(String.valueOf(findMe));
+       logger.debug(String.valueOf(findMe));
        return findMe;
     }
     public Optional<Student> requestStudentLastName(String lastName) {
