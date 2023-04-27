@@ -2,9 +2,9 @@ package com.dms.hims.service;
 
 import com.dms.hims.data.StudentRepository;
 import com.dms.hims.model.Student;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,7 @@ import java.util.Optional;
 @Service
 public class StudentService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;

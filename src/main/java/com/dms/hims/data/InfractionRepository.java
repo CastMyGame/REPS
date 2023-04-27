@@ -5,9 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface InfractionRepository extends MongoRepository<Infraction, String> {
+public interface InfractionRepository extends MongoRepository<Infraction, Integer> {
     Optional<Infraction> findByInfractionId(String infractionId);
     Optional<Infraction> findByStatus(String status);
-    Optional<Infraction> findByInfractionLevel (int level);
+    Optional<Infraction> findByInfractionCode (int code);
     Optional<Infraction> findByInfractionType (String type);
 }

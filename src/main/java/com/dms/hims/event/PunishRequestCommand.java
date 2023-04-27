@@ -1,4 +1,5 @@
-package com.dms.hims.model;
+package com.dms.hims.event;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,14 +10,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Infractions")
-public class Infraction {
+@Document(collection = "Reported_Infractions")
+public class PunishRequestCommand {
     @Id
-    private int infractionCode;
-
+    private Integer infractionCode;
     private String infractionType;
-    private String infractionUrl;
-    private String infractionAssign;
-    private String status;
+    private String studentId;
+    private String firstName;
+    private String lastName;
+    private String infractionDetails;
 
 }
