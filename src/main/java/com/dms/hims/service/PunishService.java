@@ -1,6 +1,5 @@
 package com.dms.hims.service;
 
-import com.dms.hims.data.InfractionRepository;
 import com.dms.hims.data.PunishRepository;
 import com.dms.hims.data.StudentRepository;
 import com.dms.hims.event.PunishRequestCommand;
@@ -10,17 +9,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
 public class PunishService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final PunishRepository punishRepository;
-    public PunishService (PunishRepository punishRepository) {
+    private final StudentRepository studentRepository;
+
+    public PunishService(PunishRepository punishRepository, StudentRepository studentRepository) {
         this.punishRepository = punishRepository;
+        this.studentRepository = studentRepository;
     }
 
-    public Optional<PunishRequestCommand> findByStudent (PunishRequestCommand punishRequestCommand) {
+    public Optional<PunishRequestCommand> findByStudent(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByStudent(punishRequestCommand.getStudent());
 
         if (findMe.isEmpty()) {
@@ -30,7 +33,7 @@ public class PunishService {
         return findMe;
     }
 
-    public Optional<PunishRequestCommand> findByInfraction (PunishRequestCommand punishRequestCommand) {
+    public Optional<PunishRequestCommand> findByInfraction(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByInfraction(punishRequestCommand.getInfraction());
 
         if (findMe.isEmpty()) {
@@ -40,7 +43,7 @@ public class PunishService {
         return findMe;
     }
 
-    public Optional<PunishRequestCommand> findByStatus (PunishRequestCommand punishRequestCommand) {
+    public Optional<PunishRequestCommand> findByStatus(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByStatus(punishRequestCommand.getStatus());
 
         if (findMe.isEmpty()) {
@@ -50,7 +53,7 @@ public class PunishService {
         return findMe;
     }
 
-    public Optional<PunishRequestCommand> findByPunishId (PunishRequestCommand punishRequestCommand) {
+    public Optional<PunishRequestCommand> findByPunishId(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByPunishId(punishRequestCommand.getPunishId());
 
         if (findMe.isEmpty()) {
@@ -60,7 +63,16 @@ public class PunishService {
         return findMe;
     }
 
-    public PunishRequestCommand createNewPunish (PunishRequestCommand punishRequestCommand) {
-        return punishRepository.save(punishRequestCommand);
+    public PunishRequestCommand createNewPunish(PunishRequestCommand punishRequestCommand) {
+            Optional<Student> badStudent = studentRepository.findById(punishRequestCommand.getStudent().getStudentIdNumber());
+//        if (badStudent.isEmpty()) {
+//            return exception;
+            if (badStudent != null) {
+                Student test = punishRequestCommand.getStudent();
+                ArrayList<Integer> punishments = test.getStudentPunishments();
+                punishments.add(punishRequestCommand.getPunishId());
+
+            }
+            return punishRepository.save(punishRequestCommand);
+        }
     }
-}

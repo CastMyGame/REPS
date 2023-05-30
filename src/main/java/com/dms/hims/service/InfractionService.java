@@ -22,7 +22,7 @@ public class InfractionService {
     }
 
     public Optional<Infraction> findInfractionByCode (int code) {
-        var findMe = repository.findByInfractionCode(code);
+        var findMe = repository.findByInfractionId(code);
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No infraction with that code exists");
@@ -36,16 +36,6 @@ public class InfractionService {
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No infraction with that name exists");
-        }
-        logger.debug(String.valueOf(findMe));
-        return findMe;
-    }
-
-    public Optional<Infraction> findInfractionByStatus (String status) {
-        var findMe = repository.findByStatus(status);
-
-        if (findMe.isEmpty()) {
-            throw new ResourceNotFoundException("No infraction with that status exists");
         }
         logger.debug(String.valueOf(findMe));
         return findMe;

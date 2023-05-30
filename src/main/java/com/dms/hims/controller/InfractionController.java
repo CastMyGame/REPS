@@ -28,7 +28,7 @@ public class InfractionController {
 
     @GetMapping("/infractionId")
     public ResponseEntity<Optional<Infraction>> getInfractionById (@RequestBody Infraction infraction) {
-        var findMe = service.findInfractionById(infraction.getInfractionCode());
+        var findMe = service.findInfractionById(infraction.getInfractionId());
 
         return ResponseEntity
                 .accepted()

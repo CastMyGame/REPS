@@ -28,20 +28,20 @@ public class StudentService {
        logger.debug(String.valueOf(findMe));
        return findMe;
     }
-    public Optional<Student> requestStudentLastName(String lastName) {
+    public Student requestStudentLastName(String lastName) {
         var findMe = studentRepository.findByLastName(lastName);
 
-        if (findMe.isEmpty()) {
+        if (findMe.getLastName().isEmpty()) {
             throw new ResourceNotFoundException("No student with that Last Name exists");
         }
 
         return findMe;
     }
 
-    public Optional<Student> requestStudentEmail(String email) {
-        var findMe = studentRepository.findByEmail(email);
+    public Student requestStudentEmail(String email) {
+        var findMe = studentRepository.findByStudentEmail(email);
 
-        if (findMe.isEmpty()) {
+        if (findMe.getStudentEmail().isEmpty()) {
             throw new ResourceNotFoundException("No student with that email exists");
         }
 

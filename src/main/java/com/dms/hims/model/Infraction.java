@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Infractions")
 public class Infraction {
     @Id
-    private Integer infractionCode;
+    private Integer infractionId;
     private String infractionName;
     private String infractionType;
     private String infractionUrl;
