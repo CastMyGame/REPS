@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PunishRepository extends MongoRepository<PunishRequestCommand, Integer> {
+    //May need PunishResponse if that gets made for record keeping instead
     Optional<PunishRequestCommand> findByStudent (Student student);
     Optional<PunishRequestCommand> findByInfraction (Infraction infraction);
     Optional<PunishRequestCommand> findByStatus (String status);
