@@ -4,6 +4,7 @@ import com.dms.hims.event.PunishRequestCommand;
 import com.dms.hims.model.Student;
 import com.dms.hims.service.PunishService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,8 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("/punish/v1")
 public class PunishController {
-    private final PunishService punishService;
+    @Autowired
+    PunishService punishService;
 
     @GetMapping("/punishId")
     public ResponseEntity<Optional<PunishRequestCommand>> getByPunishId(@RequestBody PunishRequestCommand punishRequestCommand) {

@@ -14,8 +14,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/student/v1")
 public class StudentController {
-
-    private final StudentService studentService;
+    @Autowired
+    StudentService studentService;
 
     @GetMapping("/studentid")
     public ResponseEntity<Optional<Student>> getStudentById(@RequestBody Integer studentId) {

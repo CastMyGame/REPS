@@ -1,27 +1,27 @@
 package com.dms.hims.service;
 
 import com.dms.hims.data.InfractionRepository;
-import com.dms.hims.data.StudentRepository;
 import com.dms.hims.model.Infraction;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class InfractionService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final InfractionRepository repository;
+    private final MongoTemplate mongoTemplate;
 
-    public InfractionService (InfractionRepository repository,
-                              StudentRepository studentRepository) {
-        this.repository = repository;
-    }
-
-    public Optional<Infraction> findInfractionByName (String name) {
-        var findMe = repository.findByInfractionName(name);
+    public Optional<Infraction> findInfractionByInfractionName (String infractionName) {
+        var findMe = repository.findByInfractionName(infractionName);
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No infraction with that name exists");
@@ -30,8 +30,8 @@ public class InfractionService {
         return findMe;
     }
 
-    public Optional<Infraction> findInfractionById (Integer id) {
-        var findMe = repository.findByInfractionId(id);
+    public Optional<Infraction> findInfractionByInfractionId (Integer infractionId) {
+        var findMe = repository.findByInfractionId(infractionId);
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No infraction with that ID exists");

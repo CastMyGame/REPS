@@ -16,7 +16,7 @@ public class InfractionController {
     private final InfractionService service;
 
     @PostMapping("/createInfraction")
-    public ResponseEntity<Infraction> createNewPunish(@RequestBody Infraction infraction) {
+    public ResponseEntity<Infraction> createNewInfraction(@RequestBody Infraction infraction) {
         var message = service.createNewInfraction(infraction);
 
         return ResponseEntity
@@ -26,7 +26,7 @@ public class InfractionController {
 
     @GetMapping("/infractionId")
     public ResponseEntity<Optional<Infraction>> getInfractionById (@RequestBody Infraction infraction) {
-        var findMe = service.findInfractionById(infraction.getInfractionId());
+        var findMe = service.findInfractionByInfractionId(infraction.getInfractionId());
 
         return ResponseEntity
                 .accepted()
@@ -35,7 +35,7 @@ public class InfractionController {
 
     @GetMapping("/infractionName")
     public ResponseEntity<Optional<Infraction>> getInfractionByName (@RequestBody Infraction infraction) {
-        var findMe = service.findInfractionByName(infraction.getInfractionName());
+        var findMe = service.findInfractionByInfractionName(infraction.getInfractionName());
 
         return ResponseEntity
                 .accepted()

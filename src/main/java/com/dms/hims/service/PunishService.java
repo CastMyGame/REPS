@@ -6,6 +6,7 @@ import com.dms.hims.event.PunishRequestCommand;
 import com.dms.hims.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,12 @@ import java.util.Optional;
 
 @Service
 public class PunishService {
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final PunishRepository punishRepository;
-    private final StudentRepository studentRepository;
+    @Autowired
+    PunishRepository punishRepository;
+    @Autowired
+    StudentRepository studentRepository;
 
     public PunishService(PunishRepository punishRepository, StudentRepository studentRepository) {
         this.punishRepository = punishRepository;
