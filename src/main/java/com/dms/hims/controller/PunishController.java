@@ -1,6 +1,7 @@
 package com.dms.hims.controller;
 
 import com.dms.hims.event.PunishRequestCommand;
+import com.dms.hims.model.Infraction;
 import com.dms.hims.model.Student;
 import com.dms.hims.service.PunishService;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +53,21 @@ public class PunishController {
         return ResponseEntity
                 .accepted()
                 .body(message);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deletePunishment (@RequestBody PunishRequestCommand requestCommand) {
+        var delete = punishService.deletePunishment(requestCommand);
+        return ResponseEntity
+                .accepted()
+                .body(delete);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<PunishRequestCommand> editInfraction (@RequestBody PunishRequestCommand requestCommand) {
+        var edit = punishService.createNewPunish(requestCommand);
+        return ResponseEntity
+                .accepted()
+                .body(edit);
     }
 }

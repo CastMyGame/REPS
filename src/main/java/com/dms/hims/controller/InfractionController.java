@@ -41,4 +41,20 @@ public class InfractionController {
                 .accepted()
                 .body(findMe);
     }
+
+    @DeleteMapping("/delete/infraction")
+    public ResponseEntity<String> deleteInfraction (@RequestBody Infraction infraction) {
+        var delete = service.deleteInfraction(infraction);
+        return ResponseEntity
+                .accepted()
+                .body(delete);
+    }
+
+    @PutMapping("/infraction/edit")
+    public ResponseEntity<Infraction> editInfraction (@RequestBody Infraction infraction) {
+        var edit = service.createNewInfraction(infraction);
+        return ResponseEntity
+                .accepted()
+                .body(edit);
+    }
 }

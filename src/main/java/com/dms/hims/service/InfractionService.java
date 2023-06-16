@@ -40,7 +40,13 @@ public class InfractionService {
         return findMe;
     }
 
-    public Infraction createNewInfraction (Infraction infraction) {
+    public Infraction createNewInfraction (Infraction infraction ) {
         return repository.save(infraction);
+    }
+    public String deleteInfraction ( Infraction infraction ) throws ResourceNotFoundException {
+        try{repository.delete(infraction);}
+        catch (Exception e) {
+            throw new ResourceNotFoundException("That infraction does not exist");
+        } return "${infraction} has been deleted";
     }
 }

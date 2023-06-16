@@ -1,5 +1,6 @@
 package com.dms.hims.controller;
 
+import com.dms.hims.model.Infraction;
 import com.dms.hims.model.Student;
 import com.dms.hims.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,21 @@ public class StudentController {
         return ResponseEntity
                 .accepted()
                 .body(message);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteStudent (@RequestBody Student student) {
+        var delete = studentService.deleteStudent(student);
+        return ResponseEntity
+                .accepted()
+                .body(delete);
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Student> editInfraction (@RequestBody Student student) {
+        var edit = studentService.createNewStudent(student);
+        return ResponseEntity
+                .accepted()
+                .body(edit);
     }
 }

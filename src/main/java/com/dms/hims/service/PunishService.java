@@ -3,6 +3,7 @@ package com.dms.hims.service;
 import com.dms.hims.data.PunishRepository;
 import com.dms.hims.data.StudentRepository;
 import com.dms.hims.event.PunishRequestCommand;
+import com.dms.hims.model.Infraction;
 import com.dms.hims.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,4 +80,11 @@ public class PunishService {
             }
             return punishRepository.save(punishRequestCommand);
         }
+
+    public String deletePunishment ( PunishRequestCommand requestCommand ) throws ResourceNotFoundException {
+        try{punishRepository.delete(requestCommand);}
+        catch (Exception e) {
+            throw new ResourceNotFoundException("That infraction does not exist");
+        } return "${infraction} has been deleted";
+    }
     }

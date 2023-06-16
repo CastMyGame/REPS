@@ -1,6 +1,7 @@
 package com.dms.hims.service;
 
 import com.dms.hims.data.StudentRepository;
+import com.dms.hims.model.Infraction;
 import com.dms.hims.model.Student;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -46,5 +47,16 @@ public class StudentService {
         }
 
         return findMe;
+    }
+
+    public Student createNewStudent (Student student ) {
+        return studentRepository.save(student);
+    }
+
+    public String deleteStudent ( Student student ) throws ResourceNotFoundException {
+        try{studentRepository.delete(student);}
+        catch (Exception e) {
+            throw new ResourceNotFoundException("That infraction does not exist");
+        } return "${infraction} has been deleted";
     }
 }
