@@ -1,9 +1,7 @@
-package com.dms.hims.service;
+package com.dms.reps.service;
 
-import com.dms.hims.data.StudentRepository;
-import com.dms.hims.model.Infraction;
-import com.dms.hims.model.Student;
-import lombok.RequiredArgsConstructor;
+import com.dms.reps.data.StudentRepository;
+import com.dms.reps.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;

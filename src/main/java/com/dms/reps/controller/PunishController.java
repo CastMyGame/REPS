@@ -1,9 +1,7 @@
-package com.dms.hims.controller;
+package com.dms.reps.controller;
 
-import com.dms.hims.event.PunishRequestCommand;
-import com.dms.hims.model.Infraction;
-import com.dms.hims.model.Student;
-import com.dms.hims.service.PunishService;
+import com.dms.reps.event.PunishRequestCommand;
+import com.dms.reps.service.PunishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

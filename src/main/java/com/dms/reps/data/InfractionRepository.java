@@ -1,6 +1,6 @@
-package com.dms.hims.data;
+package com.dms.reps.data;
 
-import com.dms.hims.model.Infraction;
+import com.dms.reps.model.Infraction;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package com.dms.hims.data;
+package com.dms.reps.data;
 
-import com.dms.hims.event.PunishRequestCommand;
-import com.dms.hims.model.Infraction;
-import com.dms.hims.model.Student;
+import com.dms.reps.event.PunishRequestCommand;
+import com.dms.reps.model.Infraction;
+import com.dms.reps.model.Student;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

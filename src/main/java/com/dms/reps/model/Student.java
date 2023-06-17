@@ -1,4 +1,4 @@
-package com.dms.hims.model;
+package com.dms.reps.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

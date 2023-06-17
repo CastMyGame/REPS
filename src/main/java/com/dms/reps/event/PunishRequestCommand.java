@@ -1,8 +1,8 @@
-package com.dms.hims.event;
+package com.dms.reps.event;
 
 
-import com.dms.hims.model.Infraction;
-import com.dms.hims.model.Student;
+import com.dms.reps.model.Infraction;
+import com.dms.reps.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

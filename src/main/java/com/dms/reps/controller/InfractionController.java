@@ -1,7 +1,7 @@
-package com.dms.hims.controller;
+package com.dms.reps.controller;
 
-import com.dms.hims.model.Infraction;
-import com.dms.hims.service.InfractionService;
+import com.dms.reps.model.Infraction;
+import com.dms.reps.service.InfractionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

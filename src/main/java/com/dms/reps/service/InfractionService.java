@@ -1,7 +1,7 @@
-package com.dms.hims.service;
+package com.dms.reps.service;
 
-import com.dms.hims.data.InfractionRepository;
-import com.dms.hims.model.Infraction;
+import com.dms.reps.data.InfractionRepository;
+import com.dms.reps.model.Infraction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

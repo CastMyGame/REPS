@@ -1,4 +1,4 @@
-package com.dms.hims;
+package com.dms.reps;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

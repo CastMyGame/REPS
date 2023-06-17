@@ -1,10 +1,9 @@
-package com.dms.hims.service;
+package com.dms.reps.service;
 
-import com.dms.hims.data.PunishRepository;
-import com.dms.hims.data.StudentRepository;
-import com.dms.hims.event.PunishRequestCommand;
-import com.dms.hims.model.Infraction;
-import com.dms.hims.model.Student;
+import com.dms.reps.data.PunishRepository;
+import com.dms.reps.data.StudentRepository;
+import com.dms.reps.event.PunishRequestCommand;
+import com.dms.reps.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

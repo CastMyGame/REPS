@@ -1,8 +1,7 @@
-package com.dms.hims.controller;
+package com.dms.reps.controller;
 
-import com.dms.hims.model.Infraction;
-import com.dms.hims.model.Student;
-import com.dms.hims.service.StudentService;
+import com.dms.reps.model.Student;
+import com.dms.reps.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

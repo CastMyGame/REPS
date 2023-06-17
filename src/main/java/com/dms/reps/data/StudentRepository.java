@@ -1,6 +1,6 @@
-package com.dms.hims.data;
+package com.dms.reps.data;
 
-import com.dms.hims.model.Student;
+import com.dms.reps.model.Student;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
