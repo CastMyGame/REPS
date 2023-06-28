@@ -1,6 +1,6 @@
 package com.dms.reps.controller;
 
-import com.dms.reps.model.Student;
+import com.dms.reps.model.student.Student;
 import com.dms.reps.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.dms.reps.model;
+package com.dms.reps.model.student;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

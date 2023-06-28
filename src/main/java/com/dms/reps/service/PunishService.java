@@ -3,7 +3,7 @@ package com.dms.reps.service;
 import com.dms.reps.data.PunishRepository;
 import com.dms.reps.data.StudentRepository;
 import com.dms.reps.event.PunishRequestCommand;
-import com.dms.reps.model.Student;
+import com.dms.reps.model.student.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
