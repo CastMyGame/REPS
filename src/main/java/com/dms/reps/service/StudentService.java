@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,8 +19,8 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Optional<Student> requestStudentId(Integer studentId) {
-       var findMe = studentRepository.findById(studentId);
+    public Optional<Student> requestStudentId(String studentId) {
+       var findMe = studentRepository.findByStudentIdNumber(studentId);
 
        if (findMe.isEmpty()) {
            throw new ResourceNotFoundException("No student with that Id exists");
@@ -27,10 +28,10 @@ public class StudentService {
        logger.debug(String.valueOf(findMe));
        return findMe;
     }
-    public Student requestStudentLastName(String lastName) {
+    public List<Student> requestStudentLastName(String lastName) {
         var findMe = studentRepository.findByLastName(lastName);
 
-        if (findMe.getLastName().isEmpty()) {
+        if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No student with that Last Name exists");
         }
 

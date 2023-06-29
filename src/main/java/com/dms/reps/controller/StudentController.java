@@ -1,12 +1,14 @@
 package com.dms.reps.controller;
 
 import com.dms.reps.model.student.Student;
+import com.dms.reps.model.student.StudentRequest;
 import com.dms.reps.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -18,7 +20,7 @@ public class StudentController {
     StudentService studentService;
 
     @GetMapping("/studentid")
-    public ResponseEntity<Optional<Student>> getStudentById(@RequestBody Integer studentId) {
+    public ResponseEntity<Optional<Student>> getStudentById(@RequestBody String studentId) {
        var message = studentService.requestStudentId(studentId);
 
        return ResponseEntity
@@ -27,7 +29,7 @@ public class StudentController {
     }
 
     @GetMapping("/lastname")
-    public ResponseEntity<Student> getStudentByLastName (@RequestBody String lastName) {
+    public ResponseEntity<List<Student>> getStudentByLastName (@RequestBody String lastName) {
         var message = studentService.requestStudentLastName(lastName);
 
         return ResponseEntity
@@ -58,5 +60,13 @@ public class StudentController {
         return ResponseEntity
                 .accepted()
                 .body(edit);
+    }
+
+    @PostMapping("/newStudent")
+    public ResponseEntity<Student> createStudent (@RequestBody StudentRequest studentRequest) {
+        var newStudent = studentService.createNewStudent(studentRequest.getStudent());
+        return ResponseEntity
+                .accepted()
+                .body(newStudent);
     }
 }

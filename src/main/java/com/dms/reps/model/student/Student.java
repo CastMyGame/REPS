@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Document(collection = "Students")
 public class Student {
     @Id
-    private Integer studentIdNumber;
+    private String studentIdNumber;
     private String firstName;
     private String lastName;
     private String parentEmail;
@@ -27,11 +27,11 @@ public class Student {
     private Integer studentPhoneNumber;
     private ArrayList<Integer> studentPunishments;
 
-    public Integer getStudentIdNumber() {
+    public String getStudentIdNumber() {
         return studentIdNumber;
     }
 
-    public void setStudentIdNumber(Integer studentIdNumber) {
+    public void setStudentIdNumber(String studentIdNumber) {
         this.studentIdNumber = studentIdNumber;
     }
 

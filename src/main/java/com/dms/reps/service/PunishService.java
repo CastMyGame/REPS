@@ -68,7 +68,7 @@ public class PunishService {
     }
 
     public PunishRequestCommand createNewPunish(PunishRequestCommand punishRequestCommand) {
-            Optional<Student> badStudent = studentRepository.findById(punishRequestCommand.getStudent().getStudentIdNumber());
+            Optional<Student> badStudent = studentRepository.findByStudentIdNumber(punishRequestCommand.getStudent().getStudentIdNumber());
 //        if (badStudent.isEmpty()) {
 //            return exception;
             if (badStudent != null) {

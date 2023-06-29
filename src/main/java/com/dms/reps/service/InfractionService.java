@@ -30,7 +30,7 @@ public class InfractionService {
         return findMe;
     }
 
-    public Optional<Infraction> findInfractionByInfractionId (Integer infractionId) {
+    public Optional<Infraction> findInfractionByInfractionId (String infractionId) {
         var findMe = repository.findByInfractionId(infractionId);
 
         if (findMe.isEmpty()) {
