@@ -63,11 +63,17 @@ public class StudentService {
         }
     }
 
-    public String deleteStudent ( Student student ) throws ResourceNotFoundException {
-        try{studentRepository.delete(student);}
+    public String deleteStudent ( StudentRequest studentRequest ) throws ResourceNotFoundException {
+        try{
+            System.out.println(studentRequest.getStudent());
+            studentRepository.delete(studentRequest.getStudent());}
         catch (Exception e) {
-            throw new ResourceNotFoundException("That infraction does not exist");
-        } return "${infraction} has been deleted";
+            throw new ResourceNotFoundException("That student does not exist");
+        } return new StringBuilder().append(studentRequest.getStudent().getFirstName())
+                .append(" ")
+                .append(studentRequest.getStudent().getLastName())
+                .append(" has been deleted")
+                .toString();
     }
 
     private Student ensureStudentExists(Student student) {
@@ -76,7 +82,7 @@ public class StudentService {
                 new Criteria()
                         .andOperator(Criteria.where("Student")
                                 .elemMatch(Criteria.where("studentIdNumber").is(student.getStudentIdNumber())),
-                                Criteria.where("studentLastName").is(student.getLastName())));
+                                Criteria.where("lastName").is(student.getLastName())));
         Student findMe = mongoTemplate.findOne(query, Student.class);
         if (findMe != null) {
             return findMe;

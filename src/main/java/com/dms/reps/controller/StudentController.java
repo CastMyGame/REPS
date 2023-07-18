@@ -49,8 +49,8 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteStudent (@RequestBody Student student) {
-        var delete = studentService.deleteStudent(student);
+    public ResponseEntity<String> deleteStudent (@RequestBody StudentRequest studentRequest) {
+        var delete = studentService.deleteStudent(studentRequest);
         return ResponseEntity
                 .accepted()
                 .body(delete);
