@@ -2,9 +2,11 @@ package com.dms.reps.controller;
 
 import com.dms.reps.model.student.Student;
 import com.dms.reps.model.student.StudentRequest;
+import com.dms.reps.model.student.StudentResponse;
 import com.dms.reps.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +40,7 @@ public class StudentController {
     }
 
     @GetMapping("/email")
-    public ResponseEntity<Student> getStudentByEmail (@RequestBody String email) {
+    public ResponseEntity<Optional<Student>> getStudentByEmail (@RequestBody String email) {
         var message = studentService.requestStudentEmail(email);
 
         return ResponseEntity
@@ -53,20 +55,20 @@ public class StudentController {
                 .accepted()
                 .body(delete);
     }
-
-    @PutMapping("/edit")
-    public ResponseEntity<Student> editInfraction (@RequestBody Student student) {
-        var edit = studentService.createNewStudent(student);
-        return ResponseEntity
-                .accepted()
-                .body(edit);
-    }
+    
+//    @PutMapping("/edit")
+//    public ResponseEntity<Student> editInfraction (@RequestBody Student student) {
+//        var edit = studentService.createNewStudent(student);
+//        return ResponseEntity
+//                .accepted()
+//                .body(edit);
+//    }
 
     @PostMapping("/newStudent")
-    public ResponseEntity<Student> createStudent (@RequestBody StudentRequest studentRequest) {
-        var newStudent = studentService.createNewStudent(studentRequest.getStudent());
-        return ResponseEntity
-                .accepted()
-                .body(newStudent);
+    public ResponseEntity<StudentResponse> createStudent (@RequestBody StudentRequest studentRequest) {
+        StudentResponse studentResponse = studentService.createNewStudent(studentRequest);
+        return studentResponse.getStudent() == null
+                ? new ResponseEntity<>(studentResponse, HttpStatus.BAD_REQUEST)
+                : new ResponseEntity<>(studentResponse, HttpStatus.CREATED);
     }
 }

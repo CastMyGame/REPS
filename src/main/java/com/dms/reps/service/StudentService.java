@@ -2,8 +2,13 @@ package com.dms.reps.service;
 
 import com.dms.reps.data.StudentRepository;
 import com.dms.reps.model.student.Student;
+import com.dms.reps.model.student.StudentRequest;
+import com.dms.reps.model.student.StudentResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class StudentService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final StudentRepository studentRepository;
-
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    private final MongoTemplate mongoTemplate;
 
     public Optional<Student> requestStudentId(String studentId) {
        var findMe = studentRepository.findByStudentIdNumber(studentId);
@@ -38,18 +42,23 @@ public class StudentService {
         return findMe;
     }
 
-    public Student requestStudentEmail(String email) {
+    public Optional<Student> requestStudentEmail(String email) {
         var findMe = studentRepository.findByStudentEmail(email);
 
-        if (findMe.getStudentEmail().isEmpty()) {
+        if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No student with that email exists");
         }
 
         return findMe;
     }
 
-    public Student createNewStudent (Student student ) {
-        return studentRepository.save(student);
+    public StudentResponse createNewStudent (StudentRequest studentRequest ) {
+        try {
+            return new StudentResponse("", studentRepository.save(studentRequest.getStudent()));
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
+            return new StudentResponse(e.getMessage(), null);
+        }
     }
 
     public String deleteStudent ( Student student ) throws ResourceNotFoundException {

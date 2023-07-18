@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepository extends MongoRepository<Student, Integer> {
+public interface StudentRepository extends MongoRepository<Student, String> {
     Optional<Student> findByStudentIdNumber (String id);
     List<Student> findByLastName(String lastName);
     @Query(value="{category:'?0'}", fields="{'First Name' : 1, 'Last Name' : 1, '}")
     List<Student> findAll(String category);
-    Student findByStudentEmail(String email);
+    Optional<Student> findByStudentEmail(String email);
 }
