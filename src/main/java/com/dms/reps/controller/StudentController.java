@@ -31,8 +31,8 @@ public class StudentController {
     }
 
     @GetMapping("/lastname")
-    public ResponseEntity<List<Student>> getStudentByLastName (@RequestBody String lastName) {
-        var message = studentService.requestStudentLastName(lastName);
+    public ResponseEntity<List<Student>> getStudentByLastName (@RequestBody StudentRequest studentRequest) {
+        var message = studentService.requestStudentLastName(studentRequest);
 
         return ResponseEntity
                 .accepted()
@@ -40,8 +40,8 @@ public class StudentController {
     }
 
     @GetMapping("/email")
-    public ResponseEntity<Optional<Student>> getStudentByEmail (@RequestBody String email) {
-        var message = studentService.requestStudentEmail(email);
+    public ResponseEntity<Optional<Student>> getStudentByEmail (@RequestBody StudentRequest studentRequest) {
+        var message = studentService.requestStudentEmail(studentRequest);
 
         return ResponseEntity
                 .accepted()

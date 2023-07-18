@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,8 @@ public class StudentService {
        logger.debug(String.valueOf(findMe));
        return findMe;
     }
-    public List<Student> requestStudentLastName(String lastName) {
-        var findMe = studentRepository.findByLastName(lastName);
+    public List<Student> requestStudentLastName(StudentRequest studentRequest) {
+        var findMe = studentRepository.findByLastName(studentRequest.getStudent().getLastName());
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No student with that Last Name exists");
@@ -42,8 +44,8 @@ public class StudentService {
         return findMe;
     }
 
-    public Optional<Student> requestStudentEmail(String email) {
-        var findMe = studentRepository.findByStudentEmail(email);
+    public Optional<Student> requestStudentEmail(StudentRequest studentRequest) {
+        var findMe = studentRepository.findByStudentEmail(studentRequest.getStudent().getStudentEmail());
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("No student with that email exists");
@@ -66,5 +68,20 @@ public class StudentService {
         catch (Exception e) {
             throw new ResourceNotFoundException("That infraction does not exist");
         } return "${infraction} has been deleted";
+    }
+
+    private Student ensureStudentExists(Student student) {
+        Query query = new Query();
+        query.addCriteria(
+                new Criteria()
+                        .andOperator(Criteria.where("Student")
+                                .elemMatch(Criteria.where("studentIdNumber").is(student.getStudentIdNumber())),
+                                Criteria.where("studentLastName").is(student.getLastName())));
+        Student findMe = mongoTemplate.findOne(query, Student.class);
+        if (findMe != null) {
+            return findMe;
+        } else {
+            return null;
+        }
     }
 }
