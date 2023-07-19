@@ -1,4 +1,4 @@
-package com.dms.reps.model;
+package com.dms.reps.model.infraction;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,12 +12,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Infractions")
 public class Infraction {
     @Id
+    private String id;
     private String infractionId;
-    private int infractionLevel;
+//    private int infractionLevel;
     private String infractionName;
     private String infractionDescription;
     private String infractionType;
-    private String infractionUrl;
+//    private String infractionUrl;
     private String infractionAssign;
 
 }

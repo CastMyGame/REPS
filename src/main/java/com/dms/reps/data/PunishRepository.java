@@ -1,7 +1,7 @@
 package com.dms.reps.data;
 
 import com.dms.reps.event.PunishRequestCommand;
-import com.dms.reps.model.Infraction;
+import com.dms.reps.model.infraction.Infraction;
 import com.dms.reps.model.student.Student;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

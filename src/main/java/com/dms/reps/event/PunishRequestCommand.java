@@ -1,7 +1,7 @@
 package com.dms.reps.event;
 
 
-import com.dms.reps.model.Infraction;
+import com.dms.reps.model.infraction.Infraction;
 import com.dms.reps.model.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;

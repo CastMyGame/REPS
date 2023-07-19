@@ -1,13 +1,16 @@
 package com.dms.reps.service;
 
 import com.dms.reps.data.InfractionRepository;
-import com.dms.reps.model.Infraction;
+import com.dms.reps.model.infraction.Infraction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,10 +33,21 @@ public class InfractionService {
         return findMe;
     }
 
-    public Optional<Infraction> findInfractionByInfractionId (String infractionId) {
+    public Infraction findByInfractionId (String infractionId) {
+//        Query query = new Query();
+//        query.addCriteria(
+//                new Criteria(
+//                ).(Criteria.where("infractionId").is(infractionId)));
+//
+//        Infraction infraction = mongoTemplate.findOne(query, Infraction.class);
+//        if (infraction != null) {
+//            return infraction;
+//        } else {
+//            return null;
+//        }
         var findMe = repository.findByInfractionId(infractionId);
 
-        if (findMe.isEmpty()) {
+        if (findMe == null) {
             throw new ResourceNotFoundException("No infraction with that ID exists");
         }
         logger.debug(String.valueOf(findMe));

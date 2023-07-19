@@ -12,7 +12,5 @@ import java.util.Optional;
 public interface StudentRepository extends MongoRepository<Student, String> {
     Optional<Student> findByStudentIdNumber (String id);
     List<Student> findByLastName(String lastName);
-    @Query(value="{category:'?0'}", fields="{'First Name' : 1, 'Last Name' : 1, '}")
-    List<Student> findAll(String category);
     Optional<Student> findByStudentEmail(String email);
 }

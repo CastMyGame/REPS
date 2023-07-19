@@ -1,4 +1,4 @@
-package com.dms.reps.model.student;
+package com.dms.reps.model.infraction;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentResponse {
+public class InfractionResponse {
     private String error;
-    private Student student;
-
+    private Infraction infraction;
 }

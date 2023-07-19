@@ -1,6 +1,6 @@
 package com.dms.reps.controller;
 
-import com.dms.reps.model.Infraction;
+import com.dms.reps.model.infraction.Infraction;
 import com.dms.reps.service.InfractionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import java.util.Optional;
 @CrossOrigin
 @RequestMapping("infraction/v1")
 public class InfractionController {
-    private final InfractionService service;
+    private final InfractionService infractionService;
 
     @PostMapping("/createInfraction")
     public ResponseEntity<Infraction> createNewInfraction(@RequestBody Infraction infraction) {
-        var message = service.createNewInfraction(infraction);
+        var message = infractionService.createNewInfraction(infraction);
 
         return ResponseEntity
                 .accepted()
@@ -25,8 +25,8 @@ public class InfractionController {
     }
 
     @GetMapping("/infractionId")
-    public ResponseEntity<Optional<Infraction>> getInfractionById (@RequestBody Infraction infraction) {
-        var findMe = service.findInfractionByInfractionId(infraction.getInfractionId());
+    public ResponseEntity<Infraction> getInfractionById (@RequestBody Infraction infraction) {
+        var findMe = infractionService.findByInfractionId(infraction.getInfractionId());
 
         return ResponseEntity
                 .accepted()
@@ -35,7 +35,7 @@ public class InfractionController {
 
     @GetMapping("/infractionName")
     public ResponseEntity<Optional<Infraction>> getInfractionByName (@RequestBody Infraction infraction) {
-        var findMe = service.findInfractionByInfractionName(infraction.getInfractionName());
+        var findMe = infractionService.findInfractionByInfractionName(infraction.getInfractionName());
 
         return ResponseEntity
                 .accepted()
@@ -44,7 +44,7 @@ public class InfractionController {
 
     @DeleteMapping("/delete/infraction")
     public ResponseEntity<String> deleteInfraction (@RequestBody Infraction infraction) {
-        var delete = service.deleteInfraction(infraction);
+        var delete = infractionService.deleteInfraction(infraction);
         return ResponseEntity
                 .accepted()
                 .body(delete);
@@ -52,7 +52,7 @@ public class InfractionController {
 
     @PutMapping("/infraction/edit")
     public ResponseEntity<Infraction> editInfraction (@RequestBody Infraction infraction) {
-        var edit = service.createNewInfraction(infraction);
+        var edit = infractionService.createNewInfraction(infraction);
         return ResponseEntity
                 .accepted()
                 .body(edit);
