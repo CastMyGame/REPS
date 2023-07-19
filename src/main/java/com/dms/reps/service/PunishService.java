@@ -1,12 +1,15 @@
 package com.dms.reps.service;
 
+import com.dms.reps.data.InfractionRepository;
 import com.dms.reps.data.PunishRepository;
 import com.dms.reps.data.StudentRepository;
-import com.dms.reps.event.PunishRequestCommand;
+import com.dms.reps.model.punishment.Punishment;
+import com.dms.reps.model.punishment.PunishmentRequest;
 import com.dms.reps.model.student.Student;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +17,23 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class PunishService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    PunishRepository punishRepository;
-    @Autowired
-    StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
+    private final InfractionRepository infractionRepository;
+    private final PunishRepository punishRepository;
 
-    public PunishService(PunishRepository punishRepository, StudentRepository studentRepository) {
+    public PunishService(PunishRepository punishRepository, StudentRepository studentRepository, InfractionRepository infractionRepository) {
         this.punishRepository = punishRepository;
         this.studentRepository = studentRepository;
+        this.infractionRepository = infractionRepository;
     }
 
-    public Optional<PunishRequestCommand> findByStudent(PunishRequestCommand punishRequestCommand) {
-        var findMe = punishRepository.findByStudent(punishRequestCommand.getStudent());
+    public Optional<Punishment> findByStudent(PunishmentRequest punishmentRequest) {
+        var findMe = punishRepository.findByStudent(punishmentRequest.getPunishment().getStudent());
 
         if (findMe.isEmpty()) {
             throw new ResourceNotFoundException("That student does not exist");
@@ -37,7 +42,7 @@ public class PunishService {
         return findMe;
     }
 
-    public Optional<PunishRequestCommand> findByInfraction(PunishRequestCommand punishRequestCommand) {
+    public Optional<Punishment> findByInfraction(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByInfraction(punishRequestCommand.getInfraction());
 
         if (findMe.isEmpty()) {
@@ -47,7 +52,7 @@ public class PunishService {
         return findMe;
     }
 
-    public Optional<PunishRequestCommand> findByStatus(PunishRequestCommand punishRequestCommand) {
+    public Optional<Punishment> findByStatus(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByStatus(punishRequestCommand.getStatus());
 
         if (findMe.isEmpty()) {
@@ -57,7 +62,7 @@ public class PunishService {
         return findMe;
     }
 
-    public Optional<PunishRequestCommand> findByPunishId(PunishRequestCommand punishRequestCommand) {
+    public Optional<Punishment> findByPunishId(PunishRequestCommand punishRequestCommand) {
         var findMe = punishRepository.findByPunishId(punishRequestCommand.getPunishId());
 
         if (findMe.isEmpty()) {
@@ -67,14 +72,14 @@ public class PunishService {
         return findMe;
     }
 
-    public PunishRequestCommand createNewPunish(PunishRequestCommand punishRequestCommand) {
-            Optional<Student> badStudent = studentRepository.findByStudentIdNumber(punishRequestCommand.getStudent().getStudentIdNumber());
+    public Punishment createNewPunish(PunishmentRequest punishmentRequest) {
+            Optional<Student> badStudent = studentRepository.findByStudentIdNumber(punishmentRequest.getStudent().getStudentIdNumber());
 //        if (badStudent.isEmpty()) {
 //            return exception;
             if (badStudent != null) {
-                Student test = punishRequestCommand.getStudent();
-                ArrayList<Integer> punishments = test.getStudentPunishments();
-                punishments.add(punishRequestCommand.getPunishId());
+                Student test = punishmentRequest.getStudent();
+                ArrayList<String> punishments = test.getStudentPunishments();
+                punishments.add(punishmentRequest.getPunishId());
 
             }
             return punishRepository.save(punishRequestCommand);

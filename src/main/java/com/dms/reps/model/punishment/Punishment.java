@@ -1,5 +1,4 @@
-package com.dms.reps.event;
-
+package com.dms.reps.model.punishment;
 
 import com.dms.reps.model.infraction.Infraction;
 import com.dms.reps.model.student.Student;
@@ -10,15 +9,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Reported_Infractions")
-public class PunishRequestCommand {
+@NoArgsConstructor
+@Document(collection = "Punishments")
+public class Punishment {
     @Id
-    private Integer punishId;
-    private Infraction infraction;
+    private String id;
+    private String punishmentId;
     private Student student;
-    private String infractionDetails;
-    private String status;
-
+    private Infraction infraction;
 }

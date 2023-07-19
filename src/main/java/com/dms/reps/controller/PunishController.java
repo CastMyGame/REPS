@@ -1,6 +1,7 @@
 package com.dms.reps.controller;
 
-import com.dms.reps.event.PunishRequestCommand;
+import com.dms.reps.model.punishment.Punishment;
+import com.dms.reps.model.punishment.PunishmentRequest;
 import com.dms.reps.service.PunishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class PunishController {
     }
 
     @GetMapping("/student")
-    public ResponseEntity<Optional<PunishRequestCommand>> getByStudent(@RequestBody PunishRequestCommand punishRequestCommand) {
-        var message = punishService.findByStudent(punishRequestCommand);
+    public ResponseEntity<Optional<Punishment>> getByStudent(@RequestBody PunishmentRequest punishmentRequest) {
+        var message = punishService.findByStudent(punishmentRequest);
 
         return ResponseEntity
                 .accepted()

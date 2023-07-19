@@ -25,7 +25,7 @@ public class Student {
     private String grade;
     private Integer parentPhoneNumber;
     private Integer studentPhoneNumber;
-    private ArrayList<Integer> studentPunishments;
+    private ArrayList<String> studentPunishments;
 
     public Student(StudentRequest studentRequest) {
         this.studentIdNumber = studentRequest.getStudent().getStudentIdNumber();
