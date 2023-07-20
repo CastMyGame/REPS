@@ -2,12 +2,14 @@ package com.dms.reps.controller;
 
 import com.dms.reps.model.punishment.Punishment;
 import com.dms.reps.model.punishment.PunishmentRequest;
-import com.dms.reps.service.PunishService;
+import com.dms.reps.model.punishment.PunishmentResponse;
+import com.dms.reps.service.PunishmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,20 +18,29 @@ import java.util.Optional;
 @RequestMapping("/punish/v1")
 public class PunishController {
     @Autowired
-    PunishService punishService;
+    PunishmentService punishmentService;
 
     @GetMapping("/punishId")
-    public ResponseEntity<Optional<PunishRequestCommand>> getByPunishId(@RequestBody PunishRequestCommand punishRequestCommand) {
-        var message = punishService.findByPunishId(punishRequestCommand);
+    public ResponseEntity<Optional<Punishment>> getByPunishId(@RequestBody Punishment punishment) {
+        var message = punishmentService.findByPunishId(punishment);
 
         return ResponseEntity
                 .accepted()
                 .body(message);
     }
 
-    @GetMapping("/punishStatus")
-    public ResponseEntity<Optional<PunishRequestCommand>> getByStatus(@RequestBody PunishRequestCommand punishRequestCommand) {
-        var message = punishService.findByStatus(punishRequestCommand);
+    @GetMapping("/punishments")
+    public ResponseEntity<List<Punishment>> getAll() {
+        var message = punishmentService.findAll();
+
+        return ResponseEntity
+                .accepted()
+                .body(message);
+    }
+
+    @GetMapping("/punishStatus/{status}")
+    public ResponseEntity<List<Punishment>> getByStatus(@PathVariable String status) {
+        var message = punishmentService.findByStatus(status);
 
         return ResponseEntity
                 .accepted()
@@ -37,8 +48,8 @@ public class PunishController {
     }
 
     @GetMapping("/student")
-    public ResponseEntity<Optional<Punishment>> getByStudent(@RequestBody PunishmentRequest punishmentRequest) {
-        var message = punishService.findByStudent(punishmentRequest);
+    public ResponseEntity<List<Punishment>> getByStudent(@RequestBody PunishmentRequest punishmentRequest) {
+        var message = punishmentService.findByStudent(punishmentRequest);
 
         return ResponseEntity
                 .accepted()
@@ -46,8 +57,8 @@ public class PunishController {
     }
 
     @PostMapping("/startPunish")
-    public ResponseEntity<PunishRequestCommand> createNewPunish(@RequestBody PunishRequestCommand punishRequestCommand) {
-        var message = punishService.createNewPunish(punishRequestCommand);
+    public ResponseEntity<PunishmentResponse> createNewPunish(@RequestBody PunishmentRequest punishmentRequest) {
+        var message = punishmentService.createNewPunish(punishmentRequest);
 
         return ResponseEntity
                 .accepted()
@@ -55,18 +66,18 @@ public class PunishController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deletePunishment (@RequestBody PunishRequestCommand requestCommand) {
-        var delete = punishService.deletePunishment(requestCommand);
+    public ResponseEntity<String> deletePunishment (@RequestBody Punishment punishment) {
+        var delete = punishmentService.deletePunishment(punishment);
         return ResponseEntity
                 .accepted()
                 .body(delete);
     }
 
-    @PutMapping("/edit")
-    public ResponseEntity<PunishRequestCommand> editInfraction (@RequestBody PunishRequestCommand requestCommand) {
-        var edit = punishService.createNewPunish(requestCommand);
-        return ResponseEntity
-                .accepted()
-                .body(edit);
-    }
+//    @PutMapping("/edit")
+//    public ResponseEntity<PunishRequestCommand> editInfraction (@RequestBody PunishRequestCommand requestCommand) {
+//        var edit = punishmentService.createNewPunish(requestCommand);
+//        return ResponseEntity
+//                .accepted()
+//                .body(edit);
+//    }
 }

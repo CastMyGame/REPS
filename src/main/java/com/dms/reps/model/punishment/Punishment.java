@@ -18,4 +18,5 @@ public class Punishment {
     private String punishmentId;
     private Student student;
     private Infraction infraction;
+    private String status;
 }
