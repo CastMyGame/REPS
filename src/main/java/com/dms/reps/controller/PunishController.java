@@ -21,8 +21,17 @@ public class PunishController {
     PunishmentService punishmentService;
 
     @GetMapping("/punishId")
-    public ResponseEntity<Optional<Punishment>> getByPunishId(@RequestBody Punishment punishment) {
+    public ResponseEntity<Punishment> getByPunishId(@RequestBody Punishment punishment) {
         var message = punishmentService.findByPunishmentId(punishment);
+
+        return ResponseEntity
+                .accepted()
+                .body(message);
+    }
+
+    @PostMapping("/punishId/close")
+    public ResponseEntity<PunishmentResponse> closePunishment(@RequestBody Punishment punishment) {
+        var message = punishmentService.closePunishment(punishment);
 
         return ResponseEntity
                 .accepted()

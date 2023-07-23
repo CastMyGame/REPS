@@ -15,5 +15,5 @@ public interface PunishRepository extends MongoRepository<Punishment, String> {
     List<Punishment> findByStudent (Student student);
     List<Punishment> findByInfraction (Infraction infraction);
     List<Punishment> findByStatus (String status);
-    Optional<Punishment> findByPunishmentId (String punishId);
+    Punishment findByPunishmentId (String punishId);
 }

@@ -28,6 +28,7 @@ public class PunishmentService {
     private final StudentRepository studentRepository;
     private final InfractionRepository infractionRepository;
     private final PunishRepository punishRepository;
+    private final EmailService emailService;
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
@@ -63,10 +64,10 @@ public class PunishmentService {
         return findMe;
     }
 
-    public Optional<Punishment> findByPunishmentId(Punishment punishment) {
+    public Punishment findByPunishmentId(Punishment punishment) {
         var findMe = punishRepository.findByPunishmentId(punishment.getPunishmentId());
 
-        if (findMe.isEmpty()) {
+        if (findMe == null) {
             throw new ResourceNotFoundException("No punishments with that ID exist");
         }
         logger.debug(String.valueOf(findMe));
@@ -84,6 +85,15 @@ public class PunishmentService {
 
         PunishmentResponse punishmentResponse = new PunishmentResponse();
         punishmentResponse.setPunishment(punishment);
+        punishmentResponse.setMessage(" Hello," +
+                " This is to inform you that " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName() +
+                " has received a REP for " + punishment.getInfraction().getInfractionName() + " and must complete "
+        + punishment.getInfraction().getInfractionAssign() + ". If you have any questions you may contact the school's main office." +
+                "This is an automated message DO NOT REPLY to this message.");
+        punishmentResponse.setSubject("REP " + punishment.getPunishmentId() + " for " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName());
+        punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
+
+        emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
 
         return punishmentResponse;
         }
@@ -93,5 +103,30 @@ public class PunishmentService {
         catch (Exception e) {
             throw new ResourceNotFoundException("That infraction does not exist");
         } return "Punishment has been deleted";
+    }
+
+    public PunishmentResponse closePunishment ( Punishment punishment ) throws  ResourceNotFoundException {
+
+        var findMe = punishRepository.findByPunishmentId(punishment.getPunishmentId());
+        System.out.println(findMe);
+
+        if (findMe != null) {
+            PunishmentResponse punishmentResponse = new PunishmentResponse();
+            punishmentResponse.setPunishment(findMe);
+            punishmentResponse.setMessage(" Hello," +
+                    " This is to inform you that " + findMe.getStudent().getFirstName() + " " + findMe.getStudent().getLastName() +
+                    " has completed "
+                    + findMe.getInfraction().getInfractionAssign() + " for " + findMe.getInfraction().getInfractionName() + ". If you have any questions you may contact the school's main office." +
+                    "This is an automated message DO NOT REPLY to this message.");
+            punishmentResponse.setSubject("REP " + findMe.getPunishmentId() + " for " + findMe.getStudent().getFirstName() + " " + findMe.getStudent().getLastName() + " CLOSED");
+            punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
+
+            emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+
+        return punishmentResponse;}
+        else {
+            throw new ResourceNotFoundException("That infraction does not exist");
+        }
+
     }
     }
