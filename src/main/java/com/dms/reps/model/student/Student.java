@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @Document(collection = "Students")
 public class Student {
     @Id
+    private String id;
     private String studentIdNumber;
     private String firstName;
     private String lastName;
@@ -25,7 +26,6 @@ public class Student {
     private String grade;
     private Integer parentPhoneNumber;
     private Integer studentPhoneNumber;
-    private ArrayList<String> studentPunishments;
 
     public Student(StudentRequest studentRequest) {
         this.studentIdNumber = studentRequest.getStudent().getStudentIdNumber();
@@ -39,7 +39,6 @@ public class Student {
         this.grade = studentRequest.getStudent().getGrade();
         this.parentPhoneNumber = studentRequest.getStudent().getParentPhoneNumber();
         this.studentPhoneNumber = studentRequest.getStudent().getStudentPhoneNumber();
-        this.studentPunishments = studentRequest.getStudent().getStudentPunishments();
     }
 
     // if multiple levels are open, automatically email guidance/admin (2 in a day or > 3)

@@ -63,7 +63,7 @@ public class PunishmentService {
         return findMe;
     }
 
-    public Optional<Punishment> findByPunishId(Punishment punishment) {
+    public Optional<Punishment> findByPunishmentId(Punishment punishment) {
         var findMe = punishRepository.findByPunishmentId(punishment.getPunishmentId());
 
         if (findMe.isEmpty()) {

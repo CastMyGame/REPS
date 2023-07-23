@@ -22,7 +22,7 @@ public class PunishController {
 
     @GetMapping("/punishId")
     public ResponseEntity<Optional<Punishment>> getByPunishId(@RequestBody Punishment punishment) {
-        var message = punishmentService.findByPunishId(punishment);
+        var message = punishmentService.findByPunishmentId(punishment);
 
         return ResponseEntity
                 .accepted()
