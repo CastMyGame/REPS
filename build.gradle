@@ -35,7 +35,7 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-mail'
 	implementation 'org.springframework.integration:spring-integration-security'
 	implementation 'org.springframework.integration:spring-integration-webflux'
-	implementation 'io.swagger.core.v3:swagger-gradle-plugin:2.2.9'
+	implementation 'org.springframework.security:spring-security-web:6.0.2'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -51,4 +51,3 @@ tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
-

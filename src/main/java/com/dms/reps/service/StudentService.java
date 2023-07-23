@@ -25,7 +25,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final MongoTemplate mongoTemplate;
 
-    public Optional<Student> requestStudentId(String studentId) {
+    public Optional<Student> requestStudentIdNumber(String studentId) {
        var findMe = studentRepository.findByStudentIdNumber(studentId);
 
        if (findMe.isEmpty()) {

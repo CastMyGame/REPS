@@ -22,8 +22,8 @@ public class StudentController {
     private final StudentService studentService;
 
     @GetMapping("/studentid")
-    public ResponseEntity<Optional<Student>> getStudentById(@RequestBody String studentId) {
-       var message = studentService.requestStudentId(studentId);
+    public ResponseEntity<Optional<Student>> getStudentByIdNumber(@RequestBody StudentRequest studentRequest) {
+       var message = studentService.requestStudentIdNumber(studentRequest.getStudent().getStudentIdNumber());
 
        return ResponseEntity
                .accepted()

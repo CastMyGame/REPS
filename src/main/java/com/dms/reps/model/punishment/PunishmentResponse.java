@@ -10,4 +10,7 @@ import lombok.NoArgsConstructor;
 public class PunishmentResponse {
     private Punishment punishment;
     private String error;
+    private String toEmail;
+    private String subject;
+    private String message;
 }
