@@ -24,8 +24,8 @@ public class Student {
     private String adminEmail;
     private String address;
     private String grade;
-    private Integer parentPhoneNumber;
-    private Integer studentPhoneNumber;
+    private String parentPhoneNumber;
+    private String studentPhoneNumber;
 
     public Student(StudentRequest studentRequest) {
         this.studentIdNumber = studentRequest.getStudent().getStudentIdNumber();

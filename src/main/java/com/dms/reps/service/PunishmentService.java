@@ -7,6 +7,9 @@ import com.dms.reps.model.punishment.Punishment;
 import com.dms.reps.model.punishment.PunishmentRequest;
 import com.dms.reps.model.punishment.PunishmentResponse;
 import com.dms.reps.model.student.Student;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -29,6 +32,9 @@ public class PunishmentService {
     private final InfractionRepository infractionRepository;
     private final PunishRepository punishRepository;
     private final EmailService emailService;
+
+    public static final String ACCOUNT_SID = "AC31fd459d82bd5d3ff135db0968b011d7";
+    public static final String AUTH_TOKEN = "ea0cd2e5f6915fd8cf8dddf7886c058d";
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
@@ -75,6 +81,8 @@ public class PunishmentService {
     }
 
     public PunishmentResponse createNewPunish(PunishmentRequest punishmentRequest) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
         Punishment punishment = new Punishment();
         punishment.setStudent(punishmentRequest.getStudent());
         punishment.setInfraction(punishmentRequest.getInfraction());
@@ -94,6 +102,9 @@ public class PunishmentService {
         punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
 
         emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+
+        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+                new PhoneNumber("+18556511443"), punishmentResponse.getMessage()).create();
 
         return punishmentResponse;
         }
@@ -122,6 +133,8 @@ public class PunishmentService {
             punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
 
             emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+
+
 
         return punishmentResponse;}
         else {
