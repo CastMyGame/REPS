@@ -7,6 +7,9 @@ import com.dms.reps.model.punishment.Punishment;
 import com.dms.reps.model.punishment.PunishmentRequest;
 import com.dms.reps.model.punishment.PunishmentResponse;
 import com.dms.reps.model.student.Student;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -29,6 +32,9 @@ public class PunishmentService {
     private final InfractionRepository infractionRepository;
     private final PunishRepository punishRepository;
     private final EmailService emailService;
+
+    public static final String ACCOUNT_SID = "AC31fd459d82bd5d3ff135db0968b011d7";
+    public static final String AUTH_TOKEN = "5c94665645233ac145793a6392f3dd68";
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
@@ -75,6 +81,8 @@ public class PunishmentService {
     }
 
     public PunishmentResponse createNewPunish(PunishmentRequest punishmentRequest) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
         Punishment punishment = new Punishment();
         punishment.setStudent(punishmentRequest.getStudent());
         punishment.setInfraction(punishmentRequest.getInfraction());
@@ -95,6 +103,9 @@ public class PunishmentService {
 
         emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
 
+        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+
         return punishmentResponse;
         }
 
@@ -106,9 +117,9 @@ public class PunishmentService {
     }
 
     public PunishmentResponse closePunishment ( Punishment punishment ) throws  ResourceNotFoundException {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         var findMe = punishRepository.findByPunishmentId(punishment.getPunishmentId());
-        System.out.println(findMe);
 
         if (findMe != null) {
             PunishmentResponse punishmentResponse = new PunishmentResponse();
@@ -123,10 +134,15 @@ public class PunishmentService {
 
             emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
 
+            Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+                    new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+
+
+
         return punishmentResponse;}
         else {
             throw new ResourceNotFoundException("That infraction does not exist");
         }
 
     }
-    }
+}
