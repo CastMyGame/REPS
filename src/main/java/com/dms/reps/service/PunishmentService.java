@@ -34,7 +34,7 @@ public class PunishmentService {
     private final EmailService emailService;
 
     public static final String ACCOUNT_SID = "AC31fd459d82bd5d3ff135db0968b011d7";
-    public static final String AUTH_TOKEN = "ea0cd2e5f6915fd8cf8dddf7886c058d";
+    public static final String AUTH_TOKEN = "5c94665645233ac145793a6392f3dd68";
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
@@ -104,7 +104,7 @@ public class PunishmentService {
         emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
 
         Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
-                new PhoneNumber("+18556511443"), punishmentResponse.getMessage()).create();
+                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
 
         return punishmentResponse;
         }
@@ -117,9 +117,9 @@ public class PunishmentService {
     }
 
     public PunishmentResponse closePunishment ( Punishment punishment ) throws  ResourceNotFoundException {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         var findMe = punishRepository.findByPunishmentId(punishment.getPunishmentId());
-        System.out.println(findMe);
 
         if (findMe != null) {
             PunishmentResponse punishmentResponse = new PunishmentResponse();
@@ -134,6 +134,9 @@ public class PunishmentService {
 
             emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
 
+            Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+                    new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+
 
 
         return punishmentResponse;}
@@ -142,4 +145,4 @@ public class PunishmentService {
         }
 
     }
-    }
+}
