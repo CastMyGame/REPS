@@ -19,4 +19,8 @@ public class Punishment {
     private Student student;
     private Infraction infraction;
     private String status;
+//    private int closedInfraction;
+//    private int infractionTimes;
+//    private String timeCreated;
+//    private String classPeriod;
 }

@@ -14,7 +14,6 @@ public class Infraction {
     @Id
     private String id;
     private String infractionId;
-//    private int infractionLevel;
     private String infractionName;
     private String infractionDescription;
     private String infractionType;

@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +36,7 @@ public class PunishmentService {
     private final EmailService emailService;
 
     public static final String ACCOUNT_SID = "AC31fd459d82bd5d3ff135db0968b011d7";
-    public static final String AUTH_TOKEN = "5c94665645233ac145793a6392f3dd68";
+    public static final String AUTH_TOKEN = "79a5f09dbb2b7d6d367c71715899a10e";
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
@@ -82,11 +84,15 @@ public class PunishmentService {
 
     public PunishmentResponse createNewPunish(PunishmentRequest punishmentRequest) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("REP CREATED");
 
         Punishment punishment = new Punishment();
         punishment.setStudent(punishmentRequest.getStudent());
         punishment.setInfraction(punishmentRequest.getInfraction());
         punishment.setPunishmentId(UUID.randomUUID().toString());
+//        punishment.setTimeCreated(now.toString());
         punishment.setStatus("OPEN");
 
         punishRepository.save(punishment);
@@ -137,7 +143,8 @@ public class PunishmentService {
             Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
                     new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
 
-
+//        int closedPunishments = punishment.getClosedInfraction();
+//        punishment.setClosedInfraction(closedPunishments + 1);
 
         return punishmentResponse;}
         else {

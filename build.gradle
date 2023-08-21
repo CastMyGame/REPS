@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-webflux'
 	implementation 'org.springframework.security:spring-security-web:6.0.2'
 	implementation 'com.twilio.sdk:twilio:10.0.0-rc.1'
+	implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.0.5'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
