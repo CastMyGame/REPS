@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "gradle": "^1.2.4",
+    "mongodb": "^5.5.0",
+    "node.js": "^0.0.1-security",
+    "@typescript-eslint/parser": "^6.0.0",
+    "express": "^4.16.3"
+  },
+  "gcp-build": "",
+  "scripts": {
+    "prepare": "npm run gcp-build",
+    "pretest": "npm run gcp-build",
+    "lint": "gts lint",
+    "start": "node ./index.js",
+    "deploy": "gcloud app deploy",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "build": "tsc -p .",
+    "gcp-build": "tsc -p ."
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.13.0",
+    "c8": "^8.0.0",
+    "chai": "^4.3.7",
+    "gts": "^5.0.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.0.0",
+    "wait-port": "^1.0.0"
+  }
+}
