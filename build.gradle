@@ -27,7 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-integration'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -39,6 +39,9 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-security'
 	implementation 'org.springframework.integration:spring-integration-webflux'
 	implementation 'org.mongodb:mongodb-driver-sync:4.10.2'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.mongodb:mongodb-driver:3.11.2'
+	implementation 'org.springframework.data:spring-data-mongodb'
 	implementation 'com.twilio.sdk:twilio:9.2.5'
 
 	compileOnly 'org.projectlombok:lombok'

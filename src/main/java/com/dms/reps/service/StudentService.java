@@ -54,27 +54,27 @@ public class StudentService {
         return findMe;
     }
 
-    public StudentResponse createNewStudent (StudentRequest studentRequest ) {
-        try {
-            return new StudentResponse("", studentRepository.save(studentRequest.getStudent()));
-        } catch (IllegalArgumentException e) {
-            log.error(e.getMessage());
-            return new StudentResponse(e.getMessage(), null);
-        }
-    }
+//    public StudentResponse createNewStudent (StudentRequest studentRequest ) {
+////        try {
+////            return new StudentResponse("", studentRepository.save(studentRequest.getStudent()));
+////        } catch (IllegalArgumentException e) {
+////            log.error(e.getMessage());
+////            return new StudentResponse(e.getMessage(), null);
+////        }
+//    }
 
-    public String deleteStudent ( StudentRequest studentRequest ) throws ResourceNotFoundException {
-        try{
-            System.out.println(studentRequest.getStudent());
-            studentRepository.delete(studentRequest.getStudent());}
-        catch (Exception e) {
-            throw new ResourceNotFoundException("That student does not exist");
-        } return new StringBuilder().append(studentRequest.getStudent().getFirstName())
-                .append(" ")
-                .append(studentRequest.getStudent().getLastName())
-                .append(" has been deleted")
-                .toString();
-    }
+//    public String deleteStudent ( StudentRequest studentRequest ) throws ResourceNotFoundException {
+//        try{
+//            System.out.println(studentRequest.getStudent());
+//            studentRepository.delete(studentRequest.getStudent());}
+//        catch (Exception e) {
+//            throw new ResourceNotFoundException("That student does not exist");
+//        } return new StringBuilder().append(studentRequest.getStudent().getFirstName())
+//                .append(" ")
+//                .append(studentRequest.getStudent().getLastName())
+//                .append(" has been deleted")
+//                .toString();
+//    }
 
     private Student ensureStudentExists(Student student) {
         Query query = new Query();

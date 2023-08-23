@@ -19,11 +19,11 @@ public class InfractionController {
 
     @PostMapping("/createInfraction")
     public ResponseEntity<Infraction> createNewInfraction(@RequestBody Infraction infraction) {
-        var message = infractionService.createNewInfraction(infraction);
+//        var message = infractionService.createNewInfraction(infraction);
 
         return ResponseEntity
                 .accepted()
-                .body(message);
+                .body(infraction);
     }
 
     @GetMapping("/infractionId")
@@ -46,17 +46,17 @@ public class InfractionController {
 
     @DeleteMapping("/delete/infraction")
     public ResponseEntity<String> deleteInfraction (@RequestBody Infraction infraction) {
-        var delete = infractionService.deleteInfraction(infraction);
+//        var delete = infractionService.deleteInfraction(infraction);
         return ResponseEntity
                 .accepted()
-                .body(delete);
+                .body("delete");
     }
 
     @PutMapping("/infraction/edit")
     public ResponseEntity<Infraction> editInfraction (@RequestBody Infraction infraction) {
-        var edit = infractionService.createNewInfraction(infraction);
+//        var edit = infractionService.createNewInfraction(infraction);
         return ResponseEntity
                 .accepted()
-                .body(edit);
+                .body(infraction);
     }
 }

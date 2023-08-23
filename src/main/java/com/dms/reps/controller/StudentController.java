@@ -50,10 +50,10 @@ public class StudentController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteStudent (@RequestBody StudentRequest studentRequest) {
-        var delete = studentService.deleteStudent(studentRequest);
+//        var delete = studentService.deleteStudent(studentRequest);
         return ResponseEntity
                 .accepted()
-                .body(delete);
+                .body("delete");
     }
     
 //    @PutMapping("/edit")
@@ -64,11 +64,11 @@ public class StudentController {
 //                .body(edit);
 //    }
 
-    @PostMapping("/newStudent")
-    public ResponseEntity<StudentResponse> createStudent (@RequestBody StudentRequest studentRequest) {
-        StudentResponse studentResponse = studentService.createNewStudent(studentRequest);
-        return studentResponse.getStudent() == null
-                ? new ResponseEntity<>(studentResponse, HttpStatus.BAD_REQUEST)
-                : new ResponseEntity<>(studentResponse, HttpStatus.CREATED);
-    }
+//    @PostMapping("/newStudent")
+//    public ResponseEntity<StudentResponse> createStudent (@RequestBody StudentRequest studentRequest) {
+////        StudentResponse studentResponse = studentService.createNewStudent(studentRequest);
+//        return studentResponse.getStudent() == null
+//                ? new ResponseEntity<>(studentResponse, HttpStatus.BAD_REQUEST)
+//                : new ResponseEntity<>(studentResponse, HttpStatus.CREATED);
+//    }
 }

@@ -92,7 +92,7 @@ public class PunishmentService {
 //        punishment.setTimeCreated(now.toString());
         punishment.setStatus("OPEN");
 
-        punishRepository.save(punishment);
+//        punishRepository.save(punishment);
 
         PunishmentResponse punishmentResponse = new PunishmentResponse();
         punishmentResponse.setPunishment(punishment);
@@ -112,12 +112,12 @@ public class PunishmentService {
         return punishmentResponse;
         }
 
-    public String deletePunishment ( Punishment punishment ) throws ResourceNotFoundException {
-        try{punishRepository.delete(punishment);}
-        catch (Exception e) {
-            throw new ResourceNotFoundException("That infraction does not exist");
-        } return "Punishment has been deleted";
-    }
+//    public String deletePunishment ( Punishment punishment ) throws ResourceNotFoundException {
+////        try{punishRepository.delete(punishment);}
+////        catch (Exception e) {
+////            throw new ResourceNotFoundException("That infraction does not exist");
+////        } return "Punishment has been deleted";
+//    }
 
     public PunishmentResponse closePunishment ( Punishment punishment ) throws  ResourceNotFoundException {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);

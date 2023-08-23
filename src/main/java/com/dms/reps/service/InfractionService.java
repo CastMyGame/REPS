@@ -2,17 +2,13 @@ package com.dms.reps.service;
 
 import com.dms.reps.data.InfractionRepository;
 import com.dms.reps.model.infraction.Infraction;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,7 +18,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class InfractionService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final InfractionRepository repository;
+    @Autowired
+    InfractionRepository repository;
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+    InfractionService(InfractionRepository repository, MongoTemplate mongoTemplate) {
+        this.repository = repository;
+        this.mongoTemplate = mongoTemplate;
+    }
 
 
 
@@ -57,13 +61,13 @@ public class InfractionService {
         return findMe;
     }
 
-    public Infraction createNewInfraction (Infraction infraction ) {
-        return repository.save(infraction);
-    }
-    public String deleteInfraction ( Infraction infraction ) throws ResourceNotFoundException {
-        try{repository.delete(infraction);}
-        catch (Exception e) {
-            throw new ResourceNotFoundException("That infraction does not exist");
-        } return "${infraction} has been deleted";
-    }
+//    public Infraction createNewInfraction (Infraction infraction ) {
+//        return repository.save(infraction);
+//    }
+//    public String deleteInfraction ( Infraction infraction ) throws ResourceNotFoundException {
+//        try{repository.delete(infraction);}
+//        catch (Exception e) {
+//            throw new ResourceNotFoundException("That infraction does not exist");
+//        } return "${infraction} has been deleted";
+//    }
 }

@@ -76,10 +76,10 @@ public class PunishController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deletePunishment (@RequestBody Punishment punishment) {
-        var delete = punishmentService.deletePunishment(punishment);
+//        var delete = punishmentService.deletePunishment(punishment);
         return ResponseEntity
                 .accepted()
-                .body(delete);
+                .body("delete");
     }
 
 //    @PutMapping("/edit")
