@@ -1,1 +1,1 @@
-web: npm run start
+web: java -Dserver.port=8080 $JAVA_OPTS -jar build/libs/HIMS-0.0.1-SNAPSHOT.jar
