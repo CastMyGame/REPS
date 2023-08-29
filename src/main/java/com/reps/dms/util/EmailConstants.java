@@ -1,4 +1,4 @@
-package com.dms.reps.util;
+package com.reps.dms.util;
 
 public class EmailConstants {
 }
