@@ -33,7 +33,7 @@ public class PunishmentService {
     private final EmailService emailService;
 
     public static final String ACCOUNT_SID = "AC31fd459d82bd5d3ff135db0968b011d7";
-    public static final String AUTH_TOKEN = "79a5f09dbb2b7d6d367c71715899a10e";
+    public static final String AUTH_TOKEN = "e39f18b47fb8274bfe7b22dc11d3779f";
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) throws Exception {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
@@ -127,6 +127,7 @@ public class PunishmentService {
         if (findMe != null) {
             PunishmentResponse punishmentResponse = new PunishmentResponse();
             punishmentResponse.setPunishment(findMe);
+            findMe.setStatus("CLOSED");
             punishmentResponse.setMessage(" Hello," +
                     " This is to inform you that " + findMe.getStudent().getFirstName() + " " + findMe.getStudent().getLastName() +
                     " has completed "
