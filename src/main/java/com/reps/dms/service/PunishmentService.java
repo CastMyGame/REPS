@@ -3,7 +3,9 @@ package com.reps.dms.service;
 import com.reps.dms.data.InfractionRepository;
 import com.reps.dms.data.PunishRepository;
 import com.reps.dms.data.StudentRepository;
+import com.reps.dms.model.infraction.Infraction;
 import com.reps.dms.model.punishment.Punishment;
+import com.reps.dms.model.punishment.PunishmentFormRequest;
 import com.reps.dms.model.punishment.PunishmentRequest;
 import com.reps.dms.model.punishment.PunishmentResponse;
 import com.reps.dms.model.student.Student;
@@ -111,6 +113,44 @@ public class PunishmentService {
 
         return punishmentResponse;
         }
+
+    public PunishmentResponse createNewPunishForm(PunishmentFormRequest formRequest) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("REP CREATED");
+
+        Student findMe = studentRepository.findByStudentEmail(formRequest.getStudentEmail());
+        Infraction findInf = infractionRepository.findByInfractionName(formRequest.getInfractionName());
+        findInf.setInfractionDescription(formRequest.getInfractionDescription());
+
+        Punishment punishment = new Punishment();
+        punishment.setStudent(findMe);
+        punishment.setInfraction(findInf);
+        punishment.setClassPeriod(formRequest.getInfractionPeriod());
+        punishment.setPunishmentId(UUID.randomUUID().toString());
+        punishment.setTimeCreated(now.toString());
+        punishment.setStatus("OPEN");
+
+        punishRepository.save(punishment);
+
+        PunishmentResponse punishmentResponse = new PunishmentResponse();
+        punishmentResponse.setPunishment(punishment);
+        punishmentResponse.setMessage(" Hello," +
+                " This is to inform you that " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName() +
+                " has received a REP for " + punishment.getInfraction().getInfractionName() + " and must complete "
+                + punishment.getInfraction().getAssignment() + ". If you have any questions you may contact the school's main office." +
+                "This is an automated message DO NOT REPLY to this message.");
+        punishmentResponse.setSubject("REP " + punishment.getPunishmentId() + " for " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName());
+        punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
+
+        emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+
+        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+
+        return punishmentResponse;
+    }
 
     public String deletePunishment ( Punishment punishment ) throws Exception {
         try{punishRepository.delete(punishment);}

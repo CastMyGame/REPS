@@ -25,8 +25,11 @@ public class Punishment {
     private Infraction infraction;
     @Column(name = "status")
     private String status;
-//    private int closedInfraction;
+    @Column(name = "closed_times")
+    private int closedTimes;
 //    private int infractionTimes;
-//    private String timeCreated;
-//    private String classPeriod;
+    @Column(name = "time_created")
+    private String timeCreated;
+    @Column (name = "class_period")
+    private String classPeriod;
 }
