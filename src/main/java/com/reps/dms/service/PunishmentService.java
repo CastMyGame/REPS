@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,8 +35,11 @@ public class PunishmentService {
     private final PunishRepository punishRepository;
     private final EmailService emailService;
 
-    public static final String ACCOUNT_SID = "AC31fd459d82bd5d3ff135db0968b011d7";
-    public static final String AUTH_TOKEN = "e39f18b47fb8274bfe7b22dc11d3779f";
+    @Value("${TWILIO_ACCOUNT_SID}")
+    String ACCOUNT_SID;
+
+    @Value("${TWILIO_AUTH_TOKEN}")
+    String AUTH_TOKEN;
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) throws Exception {
         var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
