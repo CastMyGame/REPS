@@ -1,5 +1,8 @@
 package com.reps.dms.service;
 
+import com.azure.identity.DefaultAzureCredentialBuilder;
+import com.azure.security.keyvault.secrets.SecretClient;
+import com.azure.security.keyvault.secrets.SecretClientBuilder;
 import com.reps.dms.data.StudentRepository;
 import com.reps.dms.model.student.Student;
 import com.reps.dms.model.student.StudentRequest;
@@ -16,6 +19,13 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class StudentService {
+//    String keyVaultName = "repskv";
+//    String keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
+//
+//    SecretClient secretClient = new SecretClientBuilder()
+//            .vaultUrl(keyVaultUri)
+//            .credential(new DefaultAzureCredentialBuilder().build())
+//            .buildClient();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final StudentRepository studentRepository;
 
@@ -30,6 +40,7 @@ public class StudentService {
     }
     public List<Student> requestStudentLastName(StudentRequest studentRequest) throws Exception {
         var findMe = studentRepository.findByLastName(studentRequest.getStudent().getLastName());
+//        System.out.println(secretClient.getSecret("TWILIO-ACCOUNT-SID"));  Not working because it isn't even accessing it
 
         if (findMe.isEmpty()) {
             throw new Exception("No student with that Last Name exists");

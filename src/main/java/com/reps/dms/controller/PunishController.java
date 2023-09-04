@@ -1,6 +1,7 @@
 package com.reps.dms.controller;
 
 import com.reps.dms.model.punishment.Punishment;
+import com.reps.dms.model.punishment.PunishmentFormRequest;
 import com.reps.dms.model.punishment.PunishmentRequest;
 import com.reps.dms.model.punishment.PunishmentResponse;
 import com.reps.dms.service.PunishmentService;
@@ -67,6 +68,15 @@ public class PunishController {
     @PostMapping("/startPunish")
     public ResponseEntity<PunishmentResponse> createNewPunish(@RequestBody PunishmentRequest punishmentRequest) {
         var message = punishmentService.createNewPunish(punishmentRequest);
+
+        return ResponseEntity
+                .accepted()
+                .body(message);
+    }
+
+    @PostMapping("/startPunish/form")
+    public ResponseEntity<PunishmentResponse> createNewFormPunish(@RequestBody PunishmentFormRequest punishmentFormRequest) {
+        var message = punishmentService.createNewPunishForm(punishmentFormRequest);
 
         return ResponseEntity
                 .accepted()

@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +31,7 @@ public class Punishment {
     private int closedTimes;
 //    private int infractionTimes;
     @Column(name = "time_created")
-    private String timeCreated;
+    private LocalDateTime timeCreated;
     @Column (name = "class_period")
     private String classPeriod;
 }
