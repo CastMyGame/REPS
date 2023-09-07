@@ -65,6 +65,7 @@ public class PunishController {
                 .body(message);
     }
 
+    @CrossOrigin
     @PostMapping("/startPunish")
     public ResponseEntity<PunishmentResponse> createNewPunish(@RequestBody PunishmentRequest punishmentRequest) {
         var message = punishmentService.createNewPunish(punishmentRequest);
@@ -74,6 +75,7 @@ public class PunishController {
                 .body(message);
     }
 
+    @CrossOrigin
     @PostMapping("/startPunish/form")
     public ResponseEntity<PunishmentResponse> createNewFormPunish(@RequestBody PunishmentFormRequest punishmentFormRequest) {
         var message = punishmentService.createNewPunishForm(punishmentFormRequest);

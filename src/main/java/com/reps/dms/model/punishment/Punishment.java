@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "punishment_list")
+@Table(name = "punisher_list")
 public class Punishment {
 
     @Id

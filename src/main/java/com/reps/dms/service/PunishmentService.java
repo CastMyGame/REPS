@@ -45,8 +45,7 @@ public class PunishmentService {
     private final EmailService emailService;
 
     public List<Punishment> findByStudent(PunishmentRequest punishmentRequest) throws Exception {
-        Punishment punishment = punishmentRequest.getPunishment();
-        var findMe = punishRepository.findByStudent(punishment.getStudent());
+        var findMe = punishRepository.findByStudent(punishmentRequest.getStudent());
 
         if (findMe.isEmpty()) {
             throw new Exception("That student does not exist");
@@ -60,8 +59,7 @@ public class PunishmentService {
     }
 
     public List<Punishment> findByInfraction(PunishmentRequest punishmentRequest) throws Exception {
-        Punishment punishment = punishmentRequest.getPunishment();
-        var findMe = punishRepository.findByInfraction(punishment.getInfraction());
+        var findMe = punishRepository.findByInfraction(punishmentRequest.getInfraction());
 
         if (findMe.isEmpty()) {
             throw new Exception("No students with that Infraction exist");
@@ -91,22 +89,44 @@ public class PunishmentService {
     }
 
     public PunishmentResponse createNewPunish(PunishmentRequest punishmentRequest) {
+//        var findOpen = punishRepository.findOpenByName(punishmentRequest.getStudent().getStudentIdNumber(),
+//                punishmentRequest.getInfraction().getInfractionId());
 //        Twilio.init(secretClient.getSecret("TWILIO-ACCOUNT-SID").toString(), secretClient.getSecret("TWILIO-AUTH-TOKEN").toString());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         System.out.println("REP CREATED");
 
-        Punishment punishment = punishmentRequest.getPunishment();
+        Punishment punishment = new Punishment();
+        punishment.setStudent(punishmentRequest.getStudent());
+        punishment.setInfraction(punishmentRequest.getInfraction());
         punishment.setPunishmentId(UUID.randomUUID().toString());
         punishment.setTimeCreated(now);
-        punishment.setStatus("OPEN");
 
-        System.out.println(punishment);
+//        if (findOpen != null) {
+//            punishment.setStatus("CFR");
+//            punishRepository.save(punishment);
+//
+//            PunishmentResponse punishmentResponse = new PunishmentResponse();
+//            punishmentResponse.setPunishment(punishment);
+////        punishmentResponse.setMessage(" Hello," +
+////                " This is to inform you that " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName() +
+////                " has received a REP for " + punishment.getInfraction().getInfractionName() + " and must complete "
+////        + punishment.getInfraction().getAssignment() + ". If you have any questions you may contact the school's main office." +
+////                "This is an automated message DO NOT REPLY to this message.");
+////        punishmentResponse.setSubject("REP " + punishment.getPunishmentId() + " for " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName());
+////        punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
+////
+////        emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+//
+////        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+////                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+//            return punishmentResponse;
+//        } else {
+            punishment.setStatus("OPEN");
+            punishRepository.save(punishment);
 
-        punishRepository.save(punishment);
-
-        PunishmentResponse punishmentResponse = new PunishmentResponse();
-        punishmentResponse.setPunishment(punishment);
+            PunishmentResponse punishmentResponse = new PunishmentResponse();
+            punishmentResponse.setPunishment(punishment);
 //        punishmentResponse.setMessage(" Hello," +
 //                " This is to inform you that " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName() +
 //                " has received a REP for " + punishment.getInfraction().getInfractionName() + " and must complete "
@@ -119,9 +139,8 @@ public class PunishmentService {
 
 //        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
 //                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
-
-        return punishmentResponse;
-        }
+            return punishmentResponse;
+            }
 
     public PunishmentResponse createNewPunishForm(PunishmentFormRequest formRequest) {
 //        Twilio.init(secretClient.getSecret("TWILIO-ACCOUNT-SID").toString(), secretClient.getSecret("TWILIO-AUTH-TOKEN").toString());
@@ -141,19 +160,50 @@ public class PunishmentService {
         punishment.setClassPeriod(formRequest.getInfractionPeriod());
         punishment.setPunishmentId(UUID.randomUUID().toString());
         punishment.setTimeCreated(now);
-        punishment.setStatus("OPEN");
-//        punishment.setClosedTimes("NEED TO WRITE LOGIC FOR THIS");
-        PunishmentRequest punishmentRequest = new PunishmentRequest();
-        punishmentRequest.setPunishment(punishment);
 
-//        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
-//                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
-        checkOpen(punishmentRequest);
-        punishRepository.save(punishment);
-        PunishmentResponse punishmentResponse = new PunishmentResponse();
-        punishmentResponse.setPunishment(punishment);
+        var findOpen = punishRepository.findOpenByName(punishment.getStudent().getStudentIdNumber(),
+                punishment.getInfraction().getInfractionId());
 
-        return punishmentResponse;
+        if (findOpen != null) {
+            punishment.setStatus("CFR");
+            punishRepository.save(punishment);
+
+            PunishmentResponse punishmentResponse = new PunishmentResponse();
+            punishmentResponse.setPunishment(punishment);
+            //        punishmentResponse.setMessage(" Hello," +
+            //                " This is to inform you that " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName() +
+            //                " has received a REP for " + punishment.getInfraction().getInfractionName() + " and must complete "
+            //        + punishment.getInfraction().getAssignment() + ". If you have any questions you may contact the school's main office." +
+            //                "This is an automated message DO NOT REPLY to this message.");
+            //        punishmentResponse.setSubject("REP " + punishment.getPunishmentId() + " for " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName());
+            //        punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
+            //
+            //        emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+
+            //        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+            //                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+            return punishmentResponse;
+        } else {
+            punishment.setStatus("OPEN");
+            punishRepository.save(punishment);
+
+            PunishmentResponse punishmentResponse = new PunishmentResponse();
+            punishmentResponse.setPunishment(punishment);
+            //        punishmentResponse.setMessage(" Hello," +
+            //                " This is to inform you that " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName() +
+            //                " has received a REP for " + punishment.getInfraction().getInfractionName() + " and must complete "
+            //        + punishment.getInfraction().getAssignment() + ". If you have any questions you may contact the school's main office." +
+            //                "This is an automated message DO NOT REPLY to this message.");
+            //        punishmentResponse.setSubject("REP " + punishment.getPunishmentId() + " for " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName());
+            //        punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
+            //
+            //        emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
+
+            //        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
+            //                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
+
+            return punishmentResponse;
+        }
     }
 
     public String deletePunishment ( Punishment punishment ) throws Exception {
@@ -192,45 +242,5 @@ public class PunishmentService {
         else {
             throw new Exception("That infraction does not exist");
         }
-
     }
-
-    public PunishmentResponse createClosedPunish(PunishmentRequest punishmentRequest) {
-//        Twilio.init(secretClient.getSecret("TWILIO-ACCOUNT-SID").toString(), secretClient.getSecret("TWILIO-AUTH-TOKEN").toString());
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println("REP CREATED");
-
-        Punishment punishment = punishmentRequest.getPunishment();
-        punishment.setPunishmentId(UUID.randomUUID().toString());
-        punishment.setTimeCreated(now);
-        punishment.setStatus("CFR");
-
-        return checkOpen(punishmentRequest);
-
-//        PunishmentResponse punishmentResponse = new PunishmentResponse();
-//        punishmentResponse.setPunishment(punishment);
-//        punishmentResponse.setMessage(" This message needs to be changed because it is wrong. Do we even need it for this?");
-//        punishmentResponse.setSubject("REP " + punishment.getPunishmentId() + " for " + punishment.getStudent().getFirstName() + " " + punishment.getStudent().getLastName());
-//        punishmentResponse.setToEmail(punishment.getStudent().getParentEmail());
-//
-//        emailService.sendEmail(punishmentResponse.getToEmail(), punishmentResponse.getSubject(), punishmentResponse.getMessage());
-
-//        Message.creator(new PhoneNumber(punishmentResponse.getPunishment().getStudent().getParentPhoneNumber()),
-//                new PhoneNumber("+18437900073"), punishmentResponse.getMessage()).create();
-    }
-
-    private PunishmentResponse checkOpen(PunishmentRequest punishmentRequest) {
-        Punishment punishment = punishmentRequest.getPunishment();
-        var findOpen = punishRepository.findOpenByName(punishment.getStudent().getStudentIdNumber(),
-                punishment.getInfraction().getInfractionId());
-
-        if (findOpen != null) {
-            return null;
-        } else {
-            return createNewPunish(punishmentRequest);
-        }
-
-    }
-
 }

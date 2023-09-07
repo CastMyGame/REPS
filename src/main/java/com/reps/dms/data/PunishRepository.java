@@ -17,10 +17,10 @@ public interface PunishRepository extends JpaRepository<Punishment, String> {
     List<Punishment> findByStudent (Student student);
     List<Punishment> findByInfraction (Infraction infraction);
     List<Punishment> findByStatus (String status);
-    @Query(value = "SELECT * FROM punishment_list WHERE punishment_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM punisher_list WHERE punishment_id = ?1", nativeQuery = true)
     Punishment findByPunishmentId (String punishId);
     @Query(value = "SELECT * FROM student_list WHERE student_email = ?1", nativeQuery = true)
     Student findByStudentEmail(String email);
-    @Query(value = "SELECT * FROM punishment_list WHERE student_student_id = ?1 AND infraction_infraction_id = ?2 AND status='OPEN'", nativeQuery = true)
+    @Query(value = "SELECT * FROM punisher_list WHERE student_student_id = ?1 AND infraction_infraction_id = ?2 AND status='OPEN'", nativeQuery = true)
     Punishment findOpenByName(String email, String infractionName);
     }

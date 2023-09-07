@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PunishmentRequest {
-    private Punishment punishment;
+    private Student student;
+    private Infraction infraction;
     private String error;
 }
